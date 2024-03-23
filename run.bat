@@ -1,1 +1,1 @@
-call go run ./src/main/main.go
+call go run

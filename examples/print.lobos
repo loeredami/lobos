@@ -1,0 +1,36 @@
+# I'm a comment
+[DATA]
+x:          10;
+message:    "Hello World" 0x0A 0x0D 0x00; #"Hello World\a\r\0"
+
+[REGISTERS]
+r1:     stack;
+r2:     memory;
+
+[EXECUTABLE]
+prn_loop:
+    pop     r1;
+    push    r1 r2;
+
+    prn     r1;
+    pop     r1;
+
+    incr    r2;
+    push    r1 r2;
+
+    if      r1 prn_loop;
+
+    ret;
+
+main:
+    set     r2 x;
+    push    r1 r2; 
+    prn     r1;
+    pop     r1;
+
+    set     r2 message;
+    push    r1 r2;
+    
+    call    prn_loop;
+    
+    exit;

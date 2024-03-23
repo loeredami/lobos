@@ -1,2 +1,2 @@
-call ./build.bat
-call main.exe
+call .\build.bat
+call .\lobos.exe

@@ -79,7 +79,7 @@ func (lexer *Lexer) collect_number() {
 		n := new(big.Int)
 		n.SetString(string(num), 16)
 		var val int64 = n.Int64()
-		lexer.tokens = append(lexer.tokens, Token{Number, string(val)})
+		lexer.tokens = append(lexer.tokens, Token{Number, string(rune(val))})
 		return
 	}
 	lexer.tokens = append(lexer.tokens, Token{Number, string(num)})

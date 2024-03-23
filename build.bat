@@ -1,0 +1,1 @@
+call go build ./src/main/main.go

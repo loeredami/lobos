@@ -18,6 +18,10 @@ type Lexer struct {
 	cur_char rune
 }
 
+func make_lexer(text string) Lexer {
+	return Lexer{text, []Token{}, false, 0, ' '}
+}
+
 func (lexer *Lexer) collect_mode() {
 	lexer.advance()
 	var mode []rune = []rune{}
@@ -42,11 +46,6 @@ func (lexer *Lexer) collect_identifier() {
 		lexer.advance()
 	}
 	lexer.tokens = append(lexer.tokens, Token{Identifier, string(identifier)})
-}
-
-func (lexer *Lexer) add_colon() {
-	lexer.advance()
-	lexer.tokens = append(lexer.tokens, Token{Colon, ""})
 }
 
 func (lexer *Lexer) add_semi_colon() {
@@ -140,8 +139,6 @@ func (lexer *Lexer) lex() []Token {
 			lexer.collect_identifier()
 		case strings.ContainsRune(digits, lexer.cur_char):
 			lexer.collect_number()
-		case lexer.cur_char == ':':
-			lexer.add_colon()
 		case lexer.cur_char == ';':
 			lexer.add_semi_colon()
 		case lexer.cur_char == '"':

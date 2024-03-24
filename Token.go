@@ -10,6 +10,7 @@ const (
 	String     = iota
 	SemiColon  = iota
 	EOF        = iota
+	NT         = iota
 )
 
 type Token struct {

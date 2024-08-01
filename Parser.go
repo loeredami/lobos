@@ -75,15 +75,18 @@ func (parser *Parser) advance() {
 func (parser *Parser) no_mode() {
 	for {
 		if parser.cur_token.Type == ModeSelect {
-			switch {
-			case parser.cur_token.value == "DATA":
+			if parser.cur_token.value == "DATA"{
 				parser.mode = DATA_M
-			case parser.cur_token.value == "REGISTERS":
+				break
+			} else if parser.cur_token.value == "REGISTERS" {
 				parser.mode = REGISTER_M
-			case parser.cur_token.value == "EXECUTABLE":
+				break
+			} else if parser.cur_token.value == "EXECUTABLE" {
 				parser.mode = EXE_M
-			default:
+				break
+			} else {
 				parser.mode = NO_M
+				break
 			}
 		} else {
 			parser.advance()
@@ -116,14 +119,20 @@ func (parser *Parser) add_data_entry() {
 		if parser.cur_token.Type == SemiColon {
 			break
 		}
+		if parser.cur_token.Type == ModeSelect {
+			parser.mode = NO_M
+			return
+		}
 		if parser.cur_token.Type == String {
 			for idx := 0; idx < len(parser.cur_token.value); idx++ {
 				parser.add_memory(uint64([]rune(parser.cur_token.value)[idx]))
-			}
+			} 
+			parser.advance()
 		} else {
 			n := new(big.Int)
 			n.SetString(parser.cur_token.value, 10)
 			parser.add_memory(n.Uint64())
+			parser.advance()
 		}
 	}
 	parser.advance()
